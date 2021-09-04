@@ -6,6 +6,7 @@ const jwt = require('jsonwebtoken');
 const config = require('config');
 const { body, validationResult, check } = require('express-validator');
 const User = require('../../models/User');
+const auth = require('../../middleware/auth');
 
 // @route      POST api/users
 // @des        Register User
@@ -71,8 +72,22 @@ router.post('/', [
 
     } catch (err) {
         console.log(err.message);
-        res.status(500).send('Server Error');
+        res.status(500).send('Internal Server Error');
     }
 });
+
+// @route      GET api/users
+// @des        Get all users
+// @access     Public
+router.get('/', auth, async (req, res)=>{
+    try {
+        const users = await User.find();
+        return res.json(users);
+    } catch (err) {
+        console.error(err.message);
+        return res.status(500).send('Internal Server Error');
+    }
+});
+
 
 module.exports = router;

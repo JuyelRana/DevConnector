@@ -18,7 +18,7 @@ router.get('/', auth, async (req, res)=> {
         res.json(user);
     } catch (err) {
         console.log(err.message);
-        res.status(500).send('Server Error');
+        res.status(500).send('Internal Server Error');
     }
 });
 
@@ -52,7 +52,6 @@ router.post('/', [
             return res.status(400).json({errors:[{msg: 'Invalid Credentials'}]});
         }
 
-
         // Return jsonwebtoken
         const payload = {
             user:{
@@ -72,7 +71,7 @@ router.post('/', [
 
     } catch (err) {
         console.log(err.message);
-        res.status(500).send('Server Error');
+        res.status(500).send('Internal Server Error');
     }
 });
 
